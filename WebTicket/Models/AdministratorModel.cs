@@ -13,8 +13,5 @@ namespace WebTicket
         public string DifficuiltyGrade { get; set; }
         public long UpdateTime { get; set; }
 
-
-
-
     }
 }
