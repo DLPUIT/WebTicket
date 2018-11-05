@@ -16,6 +16,7 @@ namespace WebTicket
         public string MacAddress { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public bool IsRememberMe { get; set; }
 
     }
 }

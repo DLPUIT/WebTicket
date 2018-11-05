@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WebTicket.Repo;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.Security;
 
 namespace WebTicket.Controllers
 {
@@ -31,6 +32,7 @@ namespace WebTicket.Controllers
             var user = handler.Get(x => x.RuiJieId == newUser.RuiJieId);
             if (user.Password == newUser.Password)
             {
+                FormsAuthentication.RedirectFromLoginPage(newUser.Name, newUser.IsRememberMe);
                 return RedirectToAction("index", "User");
             }
             else
@@ -38,6 +40,11 @@ namespace WebTicket.Controllers
                 return RedirectToAction("error", "User");
             }
 
+        }
+        public ActionResult SignOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("index", "User");
         }
         public ActionResult Register()
         {
@@ -59,6 +66,7 @@ namespace WebTicket.Controllers
         public ActionResult Accredit()
         {
             return View();
+
         }
         //public ActionResult AdministratorRegister()
         //{
