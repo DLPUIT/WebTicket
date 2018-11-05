@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebTicket.Repo;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace WebTicket.Controllers
 {
@@ -21,6 +23,10 @@ namespace WebTicket.Controllers
         }
         public ActionResult LoginData(UserModel newUser)
         {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] originalBytes = Encoding.Default.GetBytes(newUser.Password);
+            byte[] encodedBytes = md5.ComputeHash(originalBytes);
+            newUser.Password = BitConverter.ToString(encodedBytes);
             var handler = new UserRepo();
             var user = handler.Get(x => x.RuiJieId == newUser.RuiJieId);
             if (user.Password == newUser.Password)
@@ -40,9 +46,19 @@ namespace WebTicket.Controllers
 
         public ActionResult SaveRegisterDate(UserModel newUser)
         {
+            
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] originalBytes = Encoding.Default.GetBytes(newUser.Password);
+            byte[] encodedBytes = md5.ComputeHash(originalBytes);
+            newUser.Password=BitConverter.ToString(encodedBytes);
+            newUser.ConfirmPassword=BitConverter.ToString(encodedBytes);
             var handler = new UserRepo();
             handler.Add(newUser);
             return RedirectToAction("Login", "User");
+        }
+        public ActionResult Accredit()
+        {
+            return View();
         }
         //public ActionResult AdministratorRegister()
         //{
