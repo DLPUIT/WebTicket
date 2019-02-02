@@ -1,8 +1,0 @@
-﻿
-namespace WebTicket.Repo
-{
-    using SquirrelFramework.Repository;
-    public class UserRepo : RepositoryBase<UserModel>
-    {
-    }
-}
